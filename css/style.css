@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --btn-main-color: rgb(91, 91, 252);
+    --btn-main-pressed-color:rgb(28, 28, 75);
+    --btn-secondary-color: rgb(119, 119, 255);
+    --btn-secondary-pressed-color: rgb(37, 37, 78);
+    --form-outline-color: rgb(159, 159, 255);
+    --form-input-font-color: rgb(53, 53, 53);
+    --main-text-color: rgb(218, 218, 218);
+    --main-bg-color: rgb(49, 49, 145);
+    --secondary-bg-color: rgb(18, 18, 53);
+}
+
+* {
+    font-family: 'Roboto';
+    color: var(--main-text-color);
+    box-sizing: border-box;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    border: none;
+    padding: 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.form-item > * {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border-radius: .4rem;
+    outline: none;
+    border: none;
+    color: var(--form-input-font-color);
+}
+
+.form-input:focus {
+    outline: solid 3px var(--form-outline-color);
+}
+
+.btn-main {
+    background-color: var(--btn-main-color);
+}
+
+.btn-main:hover {
+    background-color: var(--btn-main-pressed-color);
+}
+
+.btn-secondary {
+    background-color: var(--btn-secondary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--btn-secondary-pressed-color);
+}
