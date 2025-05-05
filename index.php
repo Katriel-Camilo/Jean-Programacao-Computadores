@@ -4,7 +4,7 @@ session_start();
 
 //Logado
 if (!empty($_SESSION["id_user"])) {
-    header('location:Sistema/main.php');
+    header('location:feed.php');
 }
     
 $email = $senha = "";
@@ -30,14 +30,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             require 'app/conexao.php';
             
             if(logar($email, $senha, $conn)) {
-                header("location:Sistema/main.php");
+                header("location:feed.php");
             }
                 
             $conn->close();
         }
             
     }
-    else if(isset($_POST['btn-cadastrar-submit'])) {
+    else if(isset($_POST['submit']) && $_POST['submit'] === 'btn-cadastrar-submit') {
+
         if (empty($_POST["inputnomeregistro"])) {
             $ErroNomeRegistro = "invalido";
         } else {
@@ -67,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Error:  $sql <br>" . $conn->error;
             } else {
                 if(logar($email, $senha, $conn)) {
-                    header("location:Sistema/main.php");
+                    header("location:feed.php");
                 }
             }
             $conn->close();
