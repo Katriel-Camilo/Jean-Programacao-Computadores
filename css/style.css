@@ -64,3 +64,30 @@ button {
 .btn-secondary:hover {
     background-color: var(--btn-secondary-pressed-color);
 }
+
+.input-file {
+    display: none; 
+}
+
+.label-file {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: var(--btn-main-color);
+    font-family: sans-serif;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.label-file:hover {
+    background-color: var(--btn-main-color);
+    color: #ffffff;
+
+}
+
+.preview-imagem {
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+}

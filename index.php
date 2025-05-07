@@ -11,6 +11,7 @@ $email = $senha = "";
 $ErroEmail = $ErroSenha = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
+    //login
     if (isset($_POST["submit"]) && $_POST["submit"] === "btn-login-submit") {
         //verificar preenchimento email
         if (empty($_POST["inputemaillogin"])) {
@@ -37,7 +38,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
             
     }
+    //cadastro
     else if(isset($_POST['submit']) && $_POST['submit'] === 'btn-cadastrar-submit') {
+        $url_imagem_usuario = "imagens/usuarios/anonimo.png";
+        if (
+            !empty($_FILES['imagem']['name'])
+        ) {
+            $pasta = 'imagens/usuarios/';
+            if (!is_dir($pasta)) {
+                mkdir($pasta, 0755, true);
+            }
+            $nomeArquivo = basename($_FILES['imagem']['name']);
+            $extensao = strtolower(pathinfo($nomeArquivo, PATHINFO_EXTENSION));
+            $nomeFinal = uniqid() . "." . $extensao;
+            $url_imagem_usuario = $pasta . $nomeFinal;
+            move_uploaded_file($_FILES['imagem']['tmp_name'], $url_imagem_usuario);
+            echo $url_imagem_usuario;
+        } 
 
         if (empty($_POST["inputnomeregistro"])) {
             $ErroNomeRegistro = "invalido";
@@ -62,8 +79,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             require 'app/conexao.php';
     
             $hash_da_senha = md5($senha);
-            $sql = "INSERT INTO tb_usuarios (nome, email, senha)
-            VALUES ('$nome', '$email', '$hash_da_senha')";
+            $sql = "INSERT INTO tb_usuarios (nome, email, senha, url_imagem)
+            VALUES ('$nome', '$email', '$hash_da_senha', '$url_imagem_usuario')";
             if ($conn->query($sql) != TRUE) {
                 echo "Error:  $sql <br>" . $conn->error;
             } else {
@@ -116,6 +133,7 @@ function logar($email, $senha, $conn) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/svg+xml" href="imagens/comum/favicon.svg" /> 
     <title>Entrar</title>
 </head>
 
@@ -149,6 +167,13 @@ function logar($email, $senha, $conn) {
                 <div class="form-item">
                     <label for="inputsenharegistro">Senha</label>
                     <input class="form-input" type="password" name="inputsenharegistro" id="inputsenharegistro" placeholder="Senha">
+                </div>
+                <div class="form-item">
+                    <div class="imagem-label-container">
+                        <label for="upload-imagem" class="label-file">Faça upload da sua imagem</label>
+                        <img id="preview" class="preview-imagem" style="display: none;" />
+                    </div>
+                    <input id="upload-imagem" name="imagem" class="input-file" type="file" accept="image/*">
                 </div>
                 <div class="btn-container">
                     <button type="submit" name="submit" class="btn-main" id="btn-cadastrar-submit" value="btn-cadastrar-submit">Cadastrar-se</button>
@@ -186,6 +211,12 @@ function logar($email, $senha, $conn) {
         margin-top: 2rem;
     }
 
+    .imagem-label-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
     @media (min-width: 700px){
         .login-container {
             width: 50vw;
@@ -219,5 +250,24 @@ function logar($email, $senha, $conn) {
         
     });
 
+
+  const input = document.getElementById('upload-imagem');
+  const preview = document.getElementById('preview');
+
+  input.addEventListener('change', () => {
+    const file = input.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = e => {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+      };
+
+      reader.readAsDataURL(file); // Lê a imagem como base64
+    } else {
+      preview.style.display = 'none';
+    }
+  });
 
 </script>

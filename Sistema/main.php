@@ -6,7 +6,7 @@ if (empty($_SESSION["id_user"])) {
     //se veio vazio, redireciono o usuário de volta para Login(index.php)
     header("location:../index.php?erro=sem session");
 }
-//codigo do cadastro da COISA
+
 //variáveis 
 $exibeMensagem = "";
 $textoMensagem = "";
@@ -15,9 +15,7 @@ $titulo = $descricao = $foto = $valor = $cor = "";
 $vazioTitulo = $vazioDescricao = "";
 //verificar se foi POST (POST é um clique no botão submit)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //verificar se foi botão postar_coisa que foi clicado
     if (isset($_POST["botao_postar"])) {
-        //verificar de preencheu tudo que precisa
         if (empty($_POST["inputTitulo"])) {
             $vazioTitulo = " Esta vazio Titulo";
             $exibeMensagem = " show";
